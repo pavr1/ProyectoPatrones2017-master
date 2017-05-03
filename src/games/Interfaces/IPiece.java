@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gamepice;
+package games.Interfaces;
 
-import board.Board;
+import games.Board.Board;
 
 /**
  *

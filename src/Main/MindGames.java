@@ -8,7 +8,7 @@ package Main;
 import games.Checkers;
 import games.Chess;
 import games.Go;
-import games.IGame;
+import games.Interfaces.IGame;
 
 /**
  *

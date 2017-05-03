@@ -5,7 +5,8 @@
  */
 package games;
 
-import gamepice.IPiece;
+import games.Interfaces.IGame;
+import games.Interfaces.IPiece;
 
 /**
  *

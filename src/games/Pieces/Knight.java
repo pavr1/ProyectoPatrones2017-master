@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gamepice;
+package games.Pieces;
 
-import board.Board;
+import games.Interfaces.IPiece;
+import games.Board.Board;
 
 /**
  *
  * @author gpalomox
  */
-public class Stone implements IPiece{
+public class Knight implements IPiece{
 
     @Override
     public void move(int pLocation, int pDestination) {
