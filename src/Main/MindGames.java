@@ -5,9 +5,9 @@
  */
 package Main;
 
-import games.Checkers;
-import games.Chess;
-import games.Go;
+import games.List.Checkers;
+import games.List.Chess;
+import games.List.Go;
 import games.Interfaces.IGame;
 
 /**

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package games;
+package games.List;
 
 import games.Interfaces.IGame;
 import games.Interfaces.IPiece;

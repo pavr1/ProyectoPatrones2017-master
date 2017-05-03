@@ -3,16 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package games;
+package games.List;
 
 import games.Interfaces.IGame;
+import games.Board.Board;
 import games.Interfaces.IPiece;
 
 /**
  *
  * @author gpalomox
  */
-public class Checkers implements IGame{
+public class Chess implements IGame{
+    
+    Board chessBoard;
 
     @Override
     public void createGame() {
@@ -37,16 +40,18 @@ public class Checkers implements IGame{
     @Override
     public void printGame() {
         
-    }
+    }    
 
     @Override
     public void drawBoard() {
         
+        chessBoard = new Board(8);
     }
 
     @Override
     public void addPice() {
         
     }
-        
+    
+    
 }
