@@ -6,7 +6,6 @@
 package games.Pieces;
 
 import games.Interfaces.IPiece;
-import games.Board.Board;
 
 /**
  *
@@ -25,7 +24,7 @@ public class men implements IPiece{
     }
 
     @Override
-    public boolean isValid(Board board, int fromX, int fromY, int toX, int toY) {
+    public boolean isValid(int fromX, int fromY, int toX, int toY) {
         return false;
     }
     

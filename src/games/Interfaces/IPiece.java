@@ -5,8 +5,6 @@
  */
 package games.Interfaces;
 
-import games.Board.Board;
-
 /**
  *
  * @author gpalomox
@@ -14,5 +12,5 @@ import games.Board.Board;
 public interface IPiece {
     public abstract void move(int pLocation, int pDestination); 
     public abstract boolean isAvailable();
-    public abstract boolean isValid(Board board, int fromX, int fromY, int toX, int toY);
+    public abstract boolean isValid(int fromX, int fromY, int toX, int toY);
 }

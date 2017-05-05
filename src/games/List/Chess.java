@@ -6,7 +6,6 @@
 package games.List;
 
 import games.Interfaces.IGame;
-import games.Board.Board;
 import games.Interfaces.IPiece;
 
 /**
@@ -14,9 +13,6 @@ import games.Interfaces.IPiece;
  * @author gpalomox
  */
 public class Chess implements IGame{
-    
-    Board chessBoard;
-
     @Override
     public void createGame() {
         
@@ -45,7 +41,6 @@ public class Chess implements IGame{
     @Override
     public void drawBoard() {
         
-        chessBoard = new Board(8);
     }
 
     @Override
