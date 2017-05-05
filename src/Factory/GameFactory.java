@@ -16,6 +16,7 @@ import games.List.Go;
  * @author pavr1
  */
 public class GameFactory {
+    
     public IGame CreateGame(GameTypes pGameType) throws Exception{
         IGame game = null;
         
