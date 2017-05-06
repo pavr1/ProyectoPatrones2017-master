@@ -5,6 +5,7 @@
  */
 package games.List;
 
+import games.Enumerations.PieceColor;
 import games.Interfaces.IGame;
 import games.Interfaces.IPiece;
 
@@ -13,40 +14,30 @@ import games.Interfaces.IPiece;
  * @author gpalomox
  */
 public class Chess implements IGame{
+
     @Override
     public void createGame() {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void saveGame() {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void loadGame() {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void checkMove(IPiece pPice) {
-        
+    public String makeMove(PieceColor pTurn, int pSourceX, int pSourceY, int pTargetX, int pTargetY) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void printGame() {
-        
-    }    
-
-    @Override
-    public void drawBoard() {
-        
+    public String printGame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void addPice() {
-        
-    }
-    
-    
 }

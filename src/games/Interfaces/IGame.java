@@ -5,6 +5,8 @@
  */
 package games.Interfaces;
 
+import games.Enumerations.PieceColor;
+
 /**
  *
  * @author gpalomox
@@ -13,14 +15,12 @@ package games.Interfaces;
  * 19 x 19 Go N Stones
  */
 public interface IGame {
-    
-
     public abstract void createGame();
     public abstract void saveGame();
     public abstract void loadGame();
-    public abstract void checkMove(IPiece pPice);
-    public abstract void printGame();
-    public abstract void drawBoard();
-    public abstract void addPice();
+    public abstract String makeMove(PieceColor pTurn, int pSourceX, int pSourceY, int pTargetX, int pTargetY);
+    public abstract String printGame();
+    /*public abstract void drawBoard();
+    public abstract void addPice();*/
     
 }
