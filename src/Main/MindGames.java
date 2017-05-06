@@ -89,7 +89,7 @@ public class MindGames {
                          
                          String message = game.makeMove(game.GetTurn(), pieceX, pieceY, targetX, targetY);
                          
-                         if("".equals(message))
+                         if(message == "")
                          {
                              System.out.println("Movimiento realizado!");
                              
