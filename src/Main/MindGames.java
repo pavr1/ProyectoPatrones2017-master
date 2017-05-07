@@ -5,10 +5,7 @@
  */
 package Main;
 
-import games.List.Checkers;
-import games.List.Chess;
-import games.List.Go;
-import games.Interfaces.IGame;
+import Data.DataHandler;
 
 /**
  *
@@ -19,9 +16,15 @@ public class MindGames {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {        
+    public static void main(String[] args)throws Exception {     
         
-        IGame newGame;
+        DataHandler dt=new DataHandler();
+        //dt.writeFile("Jose.sgf","kikiki");
+         //dt.writeFile("Jose.sgf");
+        dt.readFile("properties/Jose.sgf");
+         // dt.readFile("Jose.sgf");
+        
+       /* IGame newGame;
         
         //Chess Game
         newGame = new Chess();
@@ -31,7 +34,7 @@ public class MindGames {
         newGame.drawBoard();
         //Go Game
         newGame = new Go();
-        newGame.drawBoard();
+        newGame.drawBoard();*/
     }
     
 }

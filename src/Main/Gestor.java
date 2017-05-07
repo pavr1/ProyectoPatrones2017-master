@@ -6,6 +6,7 @@ import Factory.GameFactory;
 import games.Enumerations.GameTypes;
 import games.Interfaces.IGame;
 import games.Interfaces.IPiece;
+import java.io.FileNotFoundException;
 
 public class Gestor {
 
@@ -39,8 +40,12 @@ public class Gestor {
         return fileData;
     }
 
-    public void saveGame() {
-
+    public void saveGame(String pgameFile,String pdata) throws Exception {
+        try {
+            dataHandler.writeFile(pgameFile,pdata);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
     }
 
     public StringBuilder printGame(String pfileName) {
