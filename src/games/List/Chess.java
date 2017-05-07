@@ -21,12 +21,12 @@ public class Chess implements IGame{
     }
 
     @Override
-    public void saveGame() {
+    public void saveGame(String user1, String user2) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void loadGame() {
+    public void loadGame(String pFileName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

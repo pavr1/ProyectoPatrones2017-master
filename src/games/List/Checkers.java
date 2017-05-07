@@ -64,12 +64,11 @@ public class Checkers implements IGame{
     }
 
     @Override
-    public void saveGame() {
-        
+    public void saveGame(String user1, String user2) {
     }
 
     @Override
-    public void loadGame() {
+    public void loadGame(String pFileName) {
         
     }
 
