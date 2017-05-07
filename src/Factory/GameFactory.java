@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Factory;
 
 import games.Enumerations.GameTypes;
@@ -11,29 +6,19 @@ import games.List.Checkers;
 import games.List.Chess;
 import games.List.Go;
 
-/**
- *
- * @author pavr1
- */
 public class GameFactory {
-    
-    public IGame CreateGame(GameTypes pGameType) throws Exception{
-        IGame game = null;
-        
-        switch(pGameType){
+
+    public static IGame CreateGame(GameTypes pGameType) {
+
+        switch (pGameType) {
             case CHECKERS:
-                game = new Checkers();
-                break;
+                return new Checkers();
             case CHESS:
-                game = new Chess();
-                break;
+                return new Chess();
             case GO:
-                game = new Go();
-                break;
+                return new Go();
             default:
-                throw new Exception("Juego '" + pGameType + "' no soportado!");
+                throw new IllegalArgumentException("Juego '" + pGameType + "' no soportado!");
         }
-        
-        return game;
     }
 }

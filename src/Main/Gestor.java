@@ -24,14 +24,14 @@ public class Gestor {
     }
 
     public void createGame(GameTypes pgameType) {
-        //currentGame = GameFactory.gameSerializer(pgameType);
+        currentGame = GameFactory.CreateGame(pgameType);
     }
 
     public StringBuilder loadGame(String pfileName) {
         StringBuilder fileData = new StringBuilder();
 
         try {
-           // fileData = dataHandler.readFile(pfileName);
+            // fileData = dataHandler.readFile(pfileName);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -47,7 +47,7 @@ public class Gestor {
 
         StringBuilder gameData = new StringBuilder();
         try {
-           // gameData = dataHandler.readFile(pfileName);
+            // gameData = dataHandler.readFile(pfileName);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
