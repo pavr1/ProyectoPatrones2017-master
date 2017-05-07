@@ -5,10 +5,13 @@
  */
 package games.List;
 
+import Data.DataHandler;
 import games.Enumerations.PieceColor;
 import games.Interfaces.IGame;
 import games.Interfaces.IPiece;
 import games.Pieces.CheckersPiece;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -65,11 +68,51 @@ public class Checkers implements IGame{
 
     @Override
     public void saveGame(String user1, String user2) {
+        try {
+            String filePath = "//src/Data.Database.Checkers/" + user1 + "_" + user2 + ".ext";
+            String data = "";
+
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board[i].length; j++) {
+                    IPiece piece = board[i][j];
+
+                    if(piece == null)
+                        continue;
+
+                    data += piece.GetID() + "°" + piece.GetColor().toString() + "°" + piece.GetX() + "°" + piece.GetY() + "|";
+                }
+            }
+
+            DataHandler dataHandler = new DataHandler();
+        
+            dataHandler.writeFile(filePath, data);
+        } catch (Exception ex) {
+            Logger.getLogger(Checkers.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void loadGame(String pFileName) {
-        
+        try{
+            DataHandler dataHandler = new DataHandler();
+            //dataHandler.readFile(pFileName, this) => qué es ese IGame que se pasa por parámetro???
+            String data = "";
+            String[] piecesData = data.split("|");
+            
+            board = new IPiece[8][8];
+            
+            for (int i = 0; i < piecesData.length; i++) {
+                String[] pieceInfo = piecesData[i].split("°");
+                
+                PieceColor color = PieceColor.valueOf(pieceInfo[1]);
+                int x = Integer.parseInt(pieceInfo[2]);
+                int y = Integer.parseInt(pieceInfo[3]);
+                
+                board[y][x] = new CheckersPiece(Integer.parseInt(pieceInfo[0]), color, x, y);   
+            }
+        }catch(Exception ex){
+            throw ex;
+        }
     }
 
     @Override

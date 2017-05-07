@@ -87,5 +87,20 @@ public class CheckersPiece implements IPiece{
         x = pX;
         y = pY;
     }
+
+    @Override
+    public int GetID() {
+        return id;
+    }
+
+    @Override
+    public int GetX() {
+        return x;
+    }
+
+    @Override
+    public int GetY() {
+        return y;
+    }
     
 }
