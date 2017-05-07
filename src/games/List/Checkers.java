@@ -48,5 +48,9 @@ public class Checkers implements IGame{
     public void addPice() {
         
     }
+    
+    public String getSourcePackage(){
+        return "src/Data/Database/Checkers/";
+    }
         
 }

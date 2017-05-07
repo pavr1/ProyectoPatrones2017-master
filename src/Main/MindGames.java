@@ -6,6 +6,7 @@
 package Main;
 
 import Data.DataHandler;
+import games.List.Checkers;
 
 /**
  *
@@ -19,9 +20,9 @@ public class MindGames {
     public static void main(String[] args)throws Exception {     
         
         DataHandler dt=new DataHandler();
-        //dt.writeFile("Jose.sgf","kikiki");
+        dt.writeFile("Jose.sgf","kikiki");
          //dt.writeFile("Jose.sgf");
-        dt.readFile("properties/Jose.sgf");
+        //dt.readFile("Jse.sgf",new Checkers());
          // dt.readFile("Jose.sgf");
         
        /* IGame newGame;

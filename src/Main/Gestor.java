@@ -32,7 +32,7 @@ public class Gestor {
         StringBuilder fileData = new StringBuilder();
 
         try {
-            fileData = dataHandler.readFile(pfileName);
+           // fileData = dataHandler.readFile(pfileName);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -52,7 +52,7 @@ public class Gestor {
 
         StringBuilder gameData = new StringBuilder();
         try {
-            gameData = dataHandler.readFile(pfileName);
+           // gameData = dataHandler.readFile(pfileName);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

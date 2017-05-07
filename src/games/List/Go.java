@@ -49,4 +49,8 @@ public class Go implements IGame{
         
     }
     
+    public String getSourcePackage(){
+        return "src/Data.DataBase.Checkers";
+    }
+    
 }

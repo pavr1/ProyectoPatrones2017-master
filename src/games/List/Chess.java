@@ -48,5 +48,9 @@ public class Chess implements IGame{
         
     }
     
+    public String getSourcePackage(){
+        return "src/Data.DataBase.Checkers";
+    }
+    
     
 }

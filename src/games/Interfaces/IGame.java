@@ -22,5 +22,6 @@ public interface IGame {
     public abstract void printGame();
     public abstract void drawBoard();
     public abstract void addPice();
+    public abstract String getSourcePackage();
     
 }

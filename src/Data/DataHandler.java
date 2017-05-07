@@ -1,19 +1,19 @@
 package Data;
 
+import games.Interfaces.IGame;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Properties;
-import java.util.Scanner;
 
 public class DataHandler {
 
@@ -25,49 +25,34 @@ public class DataHandler {
         userList = new ArrayList<String>();
     }
 
-    public StringBuilder readFile(String pfile) throws Exception {
-//        BufferedReader br;
-//        String currentLine;
-//        StringBuilder fileData = new StringBuilder();
-//        InputStream in = this.getClass().getResourceAsStream(pfile);
-//
-//        // if (verifyFile(pfile)) {
-//        br = new BufferedReader(new FileReader(pfile));
-//        while ((currentLine = br.readLine()) != null) {
-//            System.out.println(currentLine);
-//           // fileData.append(currentLine).append("\n");
-//        }
-//        //}
-//        
-        
-        StringBuilder result = new StringBuilder("");
-
-	//Get file from resources folder
-	ClassLoader classLoader = getClass().getClassLoader();
-	File file = new File(classLoader.getResource(pfile).getFile());
-
-	try (Scanner scanner = new Scanner(file)) {
-
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-                        System.out.println(line);
-			result.append(line).append("\n");
-		}
-
-		scanner.close();
-
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
+    public StringBuilder readFile(String pfile, IGame pgameType) throws Exception {
+        BufferedReader br;
+        String currentLine;
         StringBuilder fileData = new StringBuilder();
+
+//        String extension = "";
+//        int i = pfile.lastIndexOf('.');
+//        if (i > 0) {
+//            extension = pfile.substring(i + 1);
+//        }
+        try {
+            br = new BufferedReader(new FileReader(pgameType.getSourcePackage() + pfile));
+
+            while ((currentLine = br.readLine()) != null) {
+                System.out.println(currentLine);
+                fileData.append(currentLine).append("\n");
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File does not exists");
+        }
 
         return fileData;
     }
 
     public void writeFile(String pfile, String pdata) throws Exception {
         File file;
-        BufferedWriter bw = null;
-        FileWriter writer = null;
+        BufferedWriter bw;
+        FileWriter writer;
 
         file = new File("src/Main/" + pfile);
         writer = new FileWriter(file);
@@ -75,6 +60,7 @@ public class DataHandler {
         bw.write(pdata);
         bw.close();
         writer.close();
+
     }
 
     public void registerUserFile(String pusername, String ppassword) throws Exception {
@@ -112,15 +98,12 @@ public class DataHandler {
     }
 
     public boolean verifyFile(String pfile) {
-        boolean fileExist = false;
+        boolean fileExists = false;
 
-        try {
-            FileReader fr = new FileReader(pfile);
-            fileExist = true;
-        } catch (Exception e) {
-
-        }
-
-        return fileExist;
+        // File f = new File(pfile).isFile();
+        //  if (new File(pfile).isFile()) {
+        //fileExists = true;
+        // }
+        return new File(pfile).exists();
     }
 }
