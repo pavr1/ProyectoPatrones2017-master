@@ -69,7 +69,7 @@ public class Checkers implements IGame{
     @Override
     public void saveGame(String user1, String user2) {
         try {
-            String filePath = "//src/Data.Database.Checkers/" + user1 + "_" + user2 + ".ext";
+            String filePath = "/src/Data/Database/Checkers/" + user1 + "_" + user2 + ".pdn";
             String data = "";
 
             for (int i = 0; i < board.length; i++) {
@@ -95,8 +95,9 @@ public class Checkers implements IGame{
     public void loadGame(String pFileName) {
         try{
             DataHandler dataHandler = new DataHandler();
-            //dataHandler.readFile(pFileName, this) => qué es ese IGame que se pasa por parámetro???
-            String data = "";
+           
+            String data = dataHandler.readFile("/src/Data/Database/Checkers/" + pFileName);
+            
             String[] piecesData = data.split("|");
             
             board = new IPiece[8][8];
