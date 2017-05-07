@@ -78,22 +78,51 @@ public class Checkers implements IGame{
             IPiece piece = board[pSourceY][pSourceX];
             
             if(piece == null){                
-                return "Pieza no encontrada!";
+                return "Advertencia: Pieza no encontrada!";
             }
             
             if(piece.GetColor() != pTurn){
-                return "Turno Incorrecto!";
+                return "Advertencia: Turno Incorrecto!";
             }
             
             if(board[pTargetY][pTargetX] != null){
-                return "Posición Ocupada!";
+                return "Advertencia: Posición Ocupada!";
             }
                         
             Boolean isValidMovement = piece.isValid(pTargetX, pTargetY);
             
             if(!isValidMovement){
-                return "Movimiento no permitido!";
+                return "Advertencia: Movimiento no permitido!";
             }
+            
+            String message = "";
+            
+            if(((pSourceX - pTargetX) == 2) || ((pSourceY - pTargetY) == 2)){
+                int x = -1;
+                int y = -1;
+                
+                if(pSourceX < pTargetX){
+                    x = 1;
+                }else{
+                    x = -1;
+                }
+                
+                if(pSourceY < pTargetY){
+                    y = 1;
+                }else{
+                    y = -1;
+                }
+                
+                if(board[pSourceY + y][pSourceX + x] == null){
+                    return "Advertencia: No se puede hacer movimientos de 2 piezas sin comer una pieza enemiga!";
+                }
+                
+                board[pSourceY + y][pSourceX + x] = null;
+                
+                message = "Felicidades, ha comido una pieza enemiga!";
+            }
+            
+            piece.UpdateCoordinates(pTargetX, pTargetY);
             
             board[pSourceY][pSourceX] = null;
             board[pTargetY][pTargetX] = piece;
@@ -104,7 +133,7 @@ public class Checkers implements IGame{
                 turn = PieceColor.BLACK;
             }
             
-            return "";
+            return message;
         }catch(Exception ex){
             throw ex;
         }
