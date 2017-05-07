@@ -5,6 +5,7 @@
  */
 package games.Pieces;
 
+import games.Enumerations.PieceColor;
 import games.Interfaces.IPiece;
 
 /**
@@ -14,18 +15,13 @@ import games.Interfaces.IPiece;
 public class Rock implements IPiece{
 
     @Override
-    public void move(int pLocation, int pDestination) {
-        
+    public boolean isValid(int x, int y) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean isAvailable() {
-        return false;
+    public PieceColor GetColor() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public boolean isValid(int fromX, int fromY, int toX, int toY) {
-        return false;
-    }
-    
 }
