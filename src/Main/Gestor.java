@@ -4,13 +4,13 @@ import Authentication.User;
 import Data.DataHandler;
 import Factory.GameFactory;
 import games.Enumerations.GameTypes;
+import games.Enumerations.PieceColor;
 import games.Interfaces.IGame;
-import games.Interfaces.IPiece;
+import java.util.Iterator;
 
 public class Gestor {
-
-    private GameFactory gameFactory;
-    private User user;
+    private String user1;
+    private String user2;
     private IGame currentGame;
     private DataHandler dataHandler;
 
@@ -18,54 +18,37 @@ public class Gestor {
         dataHandler = new DataHandler();
     }
 
-    public boolean checkMovement(IPiece piece) {
-        //return currentGame.checkMove(piece);
-        return false;
+    public String checkMovement(PieceColor piece, int pSourceX, int pSourceY, int pTargetX, int pTargetY) {
+        return currentGame.makeMove(piece, pSourceX, pSourceY, pTargetX, pTargetY);
     }
 
-    public void createGame(GameTypes pgameType) {
-        //currentGame = GameFactory.gameSerializer(pgameType);
+    public void createGame(GameTypes pgameType) throws Exception {
+        currentGame = GameFactory.CreateGame(pgameType);
     }
 
-    public StringBuilder loadGame(String pfileName) {
-        StringBuilder fileData = new StringBuilder();
-
-        try {
-            fileData = dataHandler.readFile(pfileName);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        return fileData;
+    public void loadGame(String pfileName) {
+        currentGame.loadGame(pfileName);
     }
 
     public void saveGame() {
-
+        currentGame.saveGame(user1, user2);
     }
 
-    public StringBuilder printGame(String pfileName) {
-
-        StringBuilder gameData = new StringBuilder();
-        try {
-            gameData = dataHandler.readFile(pfileName);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        return gameData;
+    public String printGame() {
+        return currentGame.printGame();
     }
 
-    public boolean createUser(String pusername, String pemail, String ppassword) throws Exception {
+    public void createUser(String pusername, String pemail, String ppassword) throws Exception {
+        User usr = new User();
+        usr.createPlayer(pusername, ppassword, pemail);
+    }
 
-        boolean userCreated = false;
+    public Iterator<String> loadUsersList() {
+        return dataHandler.loadUsersList();
+    }
 
-        if (!dataHandler.verifyUser(pusername)) {
-            //user = new User(pname, pemail, ppassword);
-            dataHandler.registerUserFile(pusername, ppassword);
-            userCreated = true;
-        }
-
-        return userCreated;
+    public void loadPlayers(String puser1, String puser2) {
+        user1 = puser1;
+        user2 = puser2;
     }
 }

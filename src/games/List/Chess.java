@@ -156,8 +156,9 @@ public class Chess implements IGame{
                                      System.out.println("Moves:");
                                      System.out.print("   ");
                                      for (int i=0; i<moveArray.length; i++) {
-                                         if ((i % 10) == 0 && i>0) System.out.print("\n   ");
-                                         System.out.print(moveArray[i].printGame()+" ");
+                                         if ((i % 10) == 0 && i>0)
+                                             System.out.print("\n   ");                                         
+                                             System.out.print(moveArray[i].printGame()+" ");                                         
                                      }
                                  }
                                  System.out.println();
@@ -199,7 +200,7 @@ public class Chess implements IGame{
                                            }
                                        }                                 
                                  b.makeMove(m);
-                                 //System.out.println(prompt + " made move "+m);
+                                 System.out.println(prompt + " moved made "+m);
                                }                        
                         while(true) {
                             System.out.print("Play again? (y/n):");
@@ -230,40 +231,22 @@ public class Chess implements IGame{
     }
     @Override
     public String printGame() {
-        String s = "";
-	s += "   a b c d e f g h\n";
-	s += "  +---------------+\n";
+        String status = "";
+	status += "   a b c d e f g h\n";
+	status += "  +---------------+\n";
 	for (int y=7; y>=0; y--) {
-	    s += (y+1) + " |";
+	    status += (y+1) + " |";
 	    for (int x=0; x<8; x++) {
-		s += piecestr.charAt(board[x][y]);
-		if (x<7) s += " ";
+		status += piecestr.charAt(board[x][y]);
+		if (x<7) status += " ";
 	    }
-	    s += "| " + (y+1);
-	    s += "\n";
+	    status += "| " + (y+1);
+	    status += "\n";
 	}
-	s += "  +---------------+\n";
-	s += "   a b c d e f g h\n";
-	return s;
-    }    
-    @Override
-     public String toString() {
-	String s = "";
-	s += "   a b c d e f g h\n";
-	s += "  +---------------+\n";
-	for (int y=7; y>=0; y--) {
-	    s += (y+1) + " |";
-	    for (int x=0; x<8; x++) {
-		s += piecestr.charAt(board[x][y]);
-		if (x<7) s += " ";
-	    }
-	    s += "| " + (y+1);
-	    s += "\n";
-	}
-	s += "  +---------------+\n";
-	s += "   a b c d e f g h\n";
-	return s;
-    }  
+	status += "  +---------------+\n";
+	status += "   a b c d e f g h\n";
+	return status;
+    } 
     @Override
      public PieceColor GetTurn() {
         return turnP;
@@ -546,8 +529,7 @@ public class Chess implements IGame{
 	if (board[4][castleRank] != makesquare(KING, turn)) return;
 	if (kingside[turn]) generateKingCastling(castleRank, moveList);
 	if (queenside[turn]) generateQueenCastling(castleRank, moveList);
-    }
-     
+    }     
      private static class PieceDesc {
 	boolean iterate;
 	Pair[] delta;

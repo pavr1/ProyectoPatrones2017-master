@@ -19,9 +19,9 @@ import java.io.InputStreamReader;
  * @author pavr1
  */
 public class GameFactory {
-    public String[] args;
+    public static String[] args;
     
-    public IGame CreateGame(GameTypes pGameType) throws Exception{
+    public static IGame CreateGame(GameTypes pGameType) throws Exception{
         IGame game = null;        
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));        
         String  optSub = null;        
@@ -108,7 +108,7 @@ public class GameFactory {
                 break;
             case CHESS:
                 game = new Chess();
-                Chess.args = this.args;
+                Chess.args = GameFactory.args;
                 while (!"3".equals(optSub)){
                         System.out.println("Chose an action for the game");
                         System.out.println("1 New Game");
@@ -116,8 +116,8 @@ public class GameFactory {
                         System.out.println("3 Quite Game");
                         optSub = in.readLine();                        
                         switch (optSub) {
-                            case "1":                                
-                                game.createGame();
+                            case "1":                                 
+                                game.createGame();                                
                             case "2":
                             case "3":                              
                                 break;                                 

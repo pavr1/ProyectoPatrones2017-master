@@ -1,7 +1,7 @@
 package Data;
 
-import games.Interfaces.IGame;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,89 +10,85 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Properties;
 
 public class DataHandler {
 
-    private InputStream inputStream;
-    private Reader inputStreamReader;
-    private ArrayList<String> userList;
-
-    public DataHandler() {
-        userList = new ArrayList<String>();
-    }
-
-    public StringBuilder readFile(String pfile) throws Exception {
+    public String readFile(String pfile) throws Exception {
         BufferedReader br;
         String currentLine;
-        StringBuilder fileData = new StringBuilder();
+        String fileData = "";
 
-        // if (verifyFile(pfile)) {
-        br = new BufferedReader(new FileReader("src/properties/" + pfile));
+        br = br = new BufferedReader(new FileReader(pfile));
         while ((currentLine = br.readLine()) != null) {
-            //System.out.println(currentLine);
-            fileData.append(currentLine).append("\n");
+            fileData += currentLine + "\n";
         }
-        //}
 
         return fileData;
     }
 
-    public void writeFile(String pfile, String pextension, String pfileData) throws Exception {
+    public void writeFile(String pfileSource, String pfileData) throws Exception {
         File file;
+        BufferedWriter bw;
+        FileWriter writer;
 
-        //if (!verifyFile(pfile)) {
-        file = new File("src/properties/" + pfile + "." + pextension);
-        FileWriter writer = new FileWriter(file);
-        writer.write(pfileData);
+        file = new File(pfileSource);
+        writer = new FileWriter(file);
+        bw = new BufferedWriter(writer);
+        bw.write(pfileData);
+        bw.close();
         writer.close();
-        // }
     }
 
-    public void registerUserFile(String pusername, String ppassword) throws Exception {
+    public void registerUserFile(String pusername, String ppassword, String pemail) throws Exception {
         Properties prop = new Properties();
         OutputStream output;
 
         if (!verifyUser(pusername)) {
-            String file = "src/properties/" + "Usr" + pusername + ".properties";
+            String file = "src/Data/Database/Users/" + pusername + ".properties";
             output = new FileOutputStream(file);
             prop.setProperty("Username", pusername);
             prop.setProperty("Password", ppassword);
-            userList.add(file);
+            prop.setProperty("Email", pemail);
             prop.store(output, null);
+
+        } else {
+            System.out.println("User already exists, try another username");
         }
     }
 
     public boolean verifyUser(String pusername) throws Exception {
-        Properties prop = new Properties();
-        InputStream input;
-        boolean userExist = false;
-        String username;
-
-        for (int i = 0; i < userList.size(); i++) {
-
-            input = new FileInputStream(userList.get(i));
-            prop.load(input);
-            username = prop.getProperty("Username");
-
-            if (username.equals(pusername)) {
-                userExist = true;
-            }
+        InputStream input = null;
+        
+        try {
+            input = new FileInputStream("src/Data/Database/Users/" + pusername + ".properties");
+            return true;
+        } catch (FileNotFoundException ex) {
+            return false;
         }
-
-        return userExist;
     }
 
-    /* public boolean verifyFile(String pfile) throws Exception {
-        boolean fileExist = false;
+    public Iterator<String> loadUsersList() {
+        File folder = new File("src/Data/Database/Users");
+        File[] listOfFiles = folder.listFiles();
+        ArrayList<String> userList = new ArrayList<String>();
 
-        FileReader fr = new FileReader("src/properties/" + pfile);
-        
-            fileExist = true;
-        
+        Properties prop = new Properties();
+        InputStream input = null;
 
-        return fileExist;
-    }*/
+        try {
+            for (File file : listOfFiles) {
+                input = new FileInputStream("src/Data/Database/Users/" + file.getName());
+                prop.load(input);
+                userList.add(prop.getProperty("Username"));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return userList.iterator();
+    }
 }

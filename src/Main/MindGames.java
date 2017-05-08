@@ -10,7 +10,6 @@ import games.Enumerations.GameTypes;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-
 /**
  *
  * @author gpalomox
@@ -49,10 +48,6 @@ public class MindGames {
                 break;
             default:System.out.println("Not a valid option\n");
         }
-        }while(!"4".equals(opt)); 
-        
-        
-
-    }
-    
+        }while(!"4".equals(opt));
+    }    
 }
