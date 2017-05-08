@@ -156,8 +156,8 @@ public class Chess implements IGame{
                                      System.out.println("Moves:");
                                      System.out.print("   ");
                                      for (int i=0; i<moveArray.length; i++) {
-                                         if ((i % 10) == 0 && i>0)
-                                             System.out.print("\n   ");                                         
+                                         if ((i % 10) == 0 && i>0){
+                                             System.out.print("\n   ");}
                                              System.out.print(moveArray[i].printGame()+" ");                                         
                                      }
                                  }
@@ -246,7 +246,10 @@ public class Chess implements IGame{
 	status += "  +---------------+\n";
 	status += "   a b c d e f g h\n";
 	return status;
-    } 
+    }
+    public String toString() {        
+	return printGame();
+    }
     @Override
      public PieceColor GetTurn() {
         return turnP;

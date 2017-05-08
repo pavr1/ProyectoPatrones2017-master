@@ -58,7 +58,15 @@ public class Move {
 	if (capCount > 0) return captureArray[rand.nextInt(capCount)];
 	return moveArray[rand.nextInt(moveArray.length)];
     }    
+
+    /**
+     *
+     * @return
+     */
     public String printGame() {
+	return toString();
+    }
+    public String toString() {
 	return new String (new byte[] {
 	    (byte) ('a'+srcx), (byte)('1'+srcy), (byte)('a'+destx), (byte)('1'+desty)});
     }
