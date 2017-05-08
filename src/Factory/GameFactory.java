@@ -6,14 +6,12 @@
 package Factory;
 
 import games.Enumerations.GameTypes;
+import games.Enumerations.PieceColor;
 import games.Interfaces.IGame;
 import games.List.Checkers;
 import games.List.Chess;
 import games.List.Go;
-import games.Pieces.Move;
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -22,125 +20,107 @@ import java.io.InputStreamReader;
  */
 public class GameFactory {
     public String[] args;
-    private static boolean logfile = false;
     
     public IGame CreateGame(GameTypes pGameType) throws Exception{
         IGame game = null;        
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        InputStreamReader stdin; 
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));        
         String  optSub = null;        
-        
+        menuloop:
         switch(pGameType){
-            case CHECKERS:
+            case CHECKERS:                
                 
-                game = new Checkers();
+                 try{
+                     game = new Checkers();
+                     int option = 0;
+                     while (option !=4){
+                         System.out.println("Select action:");
+                         System.out.println("1. Create Game");
+                         System.out.println("2. Make Move");
+                         System.out.println("3. Print Board");
+                         System.out.print("Select a value: ");
+                         option = Integer.parseInt(in.readLine());
+                         switch(option){
+                             case 1:                                 
+                                 game.createGame();
+                                 System.out.println("The game has been created" );
+                                 System.out.println(game.printGame());
+                                 break;
+                     case 2:
+                         System.out.println("Turno -> Color " + game.GetTurn().toString());
+                         System.out.print("Please provide the piece's coordinates (x,y): ");
+                         String pieceCoordinates = (String)in.readLine();
+                         
+                         if(!pieceCoordinates.contains(","))
+                         {
+                             System.out.println("Invalid piece coordinates format");;
+                             continue;
+                         }
+                         
+                         System.out.print("Please provide the target coordinates (x,y): ");
+                         String targetCoordinates = (String)in.readLine();
+                         
+                         if(!targetCoordinates.contains(","))
+                         {
+                             System.out.println("Invalid target coordinates format");;
+                             continue;
+                         }
+                         
+                         String[] pieceCoordinatesArr = pieceCoordinates.split(",");
+                         String[] targetCoordinatesArr = targetCoordinates.split(",");
+                         
+                         int pieceY = -1;
+                         int pieceX = -1;
+                         int targetY = -1;
+                         int targetX = -1;
+                         
+                         if(game.GetTurn() == PieceColor.BLACK){
+                            pieceY = Integer.parseInt(pieceCoordinatesArr[0]);
+                            pieceX = Integer.parseInt(pieceCoordinatesArr[1]);
+                            targetY = Integer.parseInt(targetCoordinatesArr[0]);
+                            targetX = Integer.parseInt(targetCoordinatesArr[1]);
+                         }else{
+                            pieceX = Integer.parseInt(pieceCoordinatesArr[0]);
+                            pieceY = Integer.parseInt(pieceCoordinatesArr[1]);
+                            targetX = Integer.parseInt(targetCoordinatesArr[0]);
+                            targetY = Integer.parseInt(targetCoordinatesArr[1]);
+                         }
+                         
+                         String message = game.makeMove(game.GetTurn(), pieceX, pieceY, targetX, targetY);
+                         
+                         if(message == "")
+                         {
+                             System.out.println("Movimiento realizado!");
+                             
+                             System.out.println(game.printGame());
+                         }else{
+                             System.out.println("Este movimiento no es permitido! Detalle: " + message);
+                         }
+                         
+                         break;
+                     case 3:
+                         System.out.println(game.printGame());
+                         break;
+                 }
+            }
+       }catch(Exception ex){
+           
+       }
                 break;
             case CHESS:
-                
+                game = new Chess();
+                Chess.args = this.args;
                 while (!"3".equals(optSub)){
                         System.out.println("Chose an action for the game");
                         System.out.println("1 New Game");
                         System.out.println("2 Load Game");
                         System.out.println("3 Quite Game");
-                        optSub = in.readLine();
-                        menuLoop:
+                        optSub = in.readLine();                        
                         switch (optSub) {
-                             case "1":                                 
-                                 if( args.length >= 2 && args[0].equals("-l") ){
-                                     stdin = new FileReader(args[1]);
-                                     logfile = true;
-                                     System.out.println(" Reading command script from file '"+args[1]+"'...");
-                                 }
-                                 else{
-                                     stdin = new InputStreamReader(System.in);
-                                 }
-                                 boolean printMoves = true;
-                                 if( args.length >= 1 && args[0].equals("-m") ){
-                                     printMoves = false;
-                                 }else if( args.length >= 3 && args[2].equals("-m")){
-                                     printMoves = false;
-                                 }
-                                 Move[] moveArray;
-                                 Chess b, temp;
-                                 String command, prompt;
-                                 Move m, randomMove;                                 
-                                 System.out.println("Computer player: ");                                 
-                                 while(true) {                                   
-                                   game = new Chess();
-                                   temp = (Chess)game;
-                                    m = new Move();
-                                    randomMove = m;
-                                 
-                                 while(true) {                                   
-                                   b = (Chess)game;
-                                   randomMove = m;
-                                 if (temp.getTurn() == Chess.WHITE){
-                                     prompt = "White";
-                                 }else{
-                                     prompt = "Black";
-                                 }
-                                 System.out.println("\n\nPosition ("+prompt+" to move):\n"+b);
-                                 moveArray = (Move[]) b.generateMoves().toArray(new Move[0]);
-                                 if (moveArray.length == 0) {
-                                     if (b.inCheck()){
-                                         System.out.println("Checkmate");
-                                     }else{
-                                         System.out.println("Stalemate");
-                                     }
-                                     break;
-                                 }
-                                 if(printMoves){
-                                     System.out.println("Moves:");
-                                     System.out.print("   ");
-                                     for (int i=0; i<moveArray.length; i++) {
-                                         if ((i % 10) == 0 && i>0) System.out.print("\n   ");
-                                         System.out.print(moveArray[i]+" ");
-                                     }
-                                 }
-                                 System.out.println();
-                                       OUTER:
-                                       while (true) {
-                                           System.out.print(prompt + " move (or \"go\" or \"quit\")> ");
-                                           command = readCommand(stdin);
-                                           switch (command) {
-                                               case "go":                                           
-                                                   m = randomMove.randomMove(b);
-                                                   System.out.println("Computer Moves: " + m);
-                                                   break;
-                                               case "quit":                                                   
-                                                   break menuLoop;
-                                               default:
-                                                   m = null;
-                                                  for (Move moveArray1 : moveArray) {
-                                                     if (command.equals(moveArray1.toString())) {
-                                                     m = moveArray1;
-                                                     break;
-                                                     }
-                                                   }if (m != null) {
-                                                       break OUTER;
-                                                   }
-                                                   System.out.println("\""+command+"\" is not a legal move");
-                                                   break;
-                                           }
-                                       }                                 
-                                 b.makeMove(m);
-                                 //System.out.println(prompt + " made move "+m);
-                               }                        
-                        while(true) {
-                            System.out.print("Play again? (y/n):");
-                            command = readCommand(stdin);
-                            if (command.equals("n")){
-                                System.exit(1);
-                            }if (command.equals("y")) {
-                                break;
-                            }
-                        }
-                       }
+                            case "1":                                
+                                game.createGame();
                             case "2":
-                                 
-                            case "3":                                
-                                break;
-                                 
+                            case "3":                              
+                                break;                                 
                             default:System.out.println("Not a valid option\n");
                         }
                 }break;
@@ -152,25 +132,5 @@ public class GameFactory {
         }
         
         return game;
-    }
-    
-        public static String readCommand(InputStreamReader stdin) throws IOException {
-        final int MAX = 100;
-        int len = 0;
-        char[] cbuf = new char[MAX];
-        //len = stdin.read(cbuf, 0, MAX);
-        for(int i=0; i<cbuf.length; i++){
-            if(logfile && !stdin.ready()) return "quit"; // file is done.
-            
-            cbuf[i] = (char)stdin.read();
-            len++;
-            if(cbuf[i] == '\n')
-                break;
-            if(cbuf[i] == -1){
-                System.out.println("An error occurred reading input");
-                System.exit(1);
-            }
-        }
-        return new String(cbuf, 0, len).trim();  /* trim() removes \n in unix and \r\n in windows */
-    }
+    }       
 }

@@ -9,8 +9,14 @@ import games.Enumerations.PieceColor;
 import games.Interfaces.IGame;
 import games.Interfaces.IPiece;
 import games.Pieces.Move;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,13 +24,18 @@ import java.util.List;
  */
 public class Chess implements IGame{
     public byte[][] board = new byte[8][8];
+    IGame game = null;
     public int previousDoublePush;
     public int turn;
+    private PieceColor turnP = PieceColor.WHITE;
     public boolean[] kingside = new boolean[2], queenside = new boolean[2];
     public boolean[] hascastled = new boolean[2];
     public static String piecestr = "nbrqkp-XNBRQKPX";
     public static PieceDesc[] pdesc = new PieceDesc[5];
     public static IPiece pawnA;
+    private static boolean logfile = false;
+    InputStreamReader stdin;
+    public static String[] args;
 
     public static final int KNIGHT = 0;
     public static final int BISHOP = 1;
@@ -37,6 +48,7 @@ public class Chess implements IGame{
 
     public static final int BLACK  = 0;
     public static final int WHITE  = 1;
+    
      static {
 	pdesc[KNIGHT] = new PieceDesc(false,  new int[]
 	    { 2, 1 , 1, 2 , 2, -1 , 1, -2 , -2, 1 , -1,2 , -2,-1 , -1,-2 });
@@ -53,7 +65,6 @@ public class Chess implements IGame{
 	pdesc[KING] = new PieceDesc(false, new int[]
 	    { 1, 0 , 0, 1 , -1,0 , 0,-1 , 1, 1 , 1,-1 , -1, -1 , -1,1 });
     }
-
     public Chess() {
 	turn = WHITE;
 	for (int x=0; x<8; x++) {
@@ -80,7 +91,6 @@ public class Chess implements IGame{
 	    board[x][6] = makesquare(PAWN, BLACK);
 	}
     }
-
     public Chess(Chess b) {
 	for (int x=0; x<8; x++) {
 	    for (int y=0; y<8; y++) {
@@ -95,34 +105,147 @@ public class Chess implements IGame{
 	    queenside[i] = b.queenside[i];
 	    hascastled[i] = b.hascastled[i];
 	}
-    }
-    
+    }    
     @Override
     public void createGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if( args.length >= 2 && args[0].equals("-l") ){
+             try {
+                 stdin = new FileReader(args[1]);
+             } catch (FileNotFoundException ex) {
+                 Logger.getLogger(Chess.class.getName()).log(Level.SEVERE, null, ex);
+             }
+                                     logfile = true;
+                                     System.out.println(" Reading command script from file '"+args[1]+"'...");
+                                 }
+                                 else{
+                                     stdin = new InputStreamReader(System.in);
+                                 }
+                                 boolean printMoves = true;
+                                 if( args.length >= 1 && args[0].equals("-m") ){
+                                     printMoves = false;
+                                 }else if( args.length >= 3 && args[2].equals("-m")){
+                                     printMoves = false;
+                                 }
+                                 Move[] moveArray;
+                                 Chess b, temp;
+                                 String command="", prompt;
+                                 Move m = new Move();               
+                                 System.out.println("Chess Game Started: ");
+                                 while(true) {                                   
+                                   game = new Chess();
+                                   temp = (Chess)game;
+                                 while(true) {                                   
+                                   b = (Chess)game;                                                            
+                                 if (temp.getTurn() == Chess.WHITE){
+                                     prompt = "White";
+                                 }else{
+                                     prompt = "Black";
+                                 }
+                                 System.out.println("\n\nPlayer ("+prompt+" to move):\n"+b);
+                                 moveArray = (Move[]) b.generateMoves().toArray(new Move[0]);
+                                 if (moveArray.length == 0) {
+                                     if (b.inCheck()){
+                                         System.out.println("Checkmate");
+                                     }else{
+                                         System.out.println("Stalemate");
+                                     }
+                                     break;
+                                 }
+                                 if(printMoves){
+                                     System.out.println("Moves:");
+                                     System.out.print("   ");
+                                     for (int i=0; i<moveArray.length; i++) {
+                                         if ((i % 10) == 0 && i>0) System.out.print("\n   ");
+                                         System.out.print(moveArray[i].printGame()+" ");
+                                     }
+                                 }
+                                 System.out.println();
+                                       OUTER:
+                                       while (true) {
+                                           System.out.print(prompt + " move (or \"go\" or \"quit\")> ");
+                                       try {
+                                           command = readCommand(stdin);
+                                       } catch (IOException ex) {
+                                           Logger.getLogger(Chess.class.getName()).log(Level.SEVERE, null, ex);
+                                       }
+                                           switch (command) {
+                                               case "go":                                           
+                                                   command = m.randomMove(b).printGame();
+                                                   for (Move moveArray1 : moveArray) {
+                                                     if (command.equals(moveArray1.printGame())) {
+                                                     m = moveArray1;
+                                                     break;
+                                                     }
+                                                   }if (m != null) {
+                                                       break OUTER;
+                                                   }
+                                                   System.out.println("Computer Moves: " + m);
+                                                   break;
+                                               case "quit":                                                  
+                                                   return;
+                                               default:
+                                                   m = null;
+                                                  for (Move moveArray1 : moveArray) {
+                                                     if (command.equals(moveArray1.printGame())) {
+                                                     m = moveArray1;
+                                                     break;
+                                                     }
+                                                   }if (m != null) {
+                                                       break OUTER;
+                                                   }
+                                                   System.out.println("\""+command+"\" is not a legal move");
+                                                   break;
+                                           }
+                                       }                                 
+                                 b.makeMove(m);
+                                 //System.out.println(prompt + " made move "+m);
+                               }                        
+                        while(true) {
+                            System.out.print("Play again? (y/n):");
+                                       try {
+                                           command = readCommand(stdin);
+                                       } catch (IOException ex) {
+                                           Logger.getLogger(Chess.class.getName()).log(Level.SEVERE, null, ex);
+                                       }                            
+                            if (command.equals("n")){
+                                System.exit(1);
+                            }if (command.equals("y")) {
+                                break;
+                            }
+                        }
+                       }
     }
-
     @Override
     public void saveGame(String user1, String user2) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     @Override
     public void loadGame(String pFileName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     @Override
     public String makeMove(PieceColor pTurn, int pSourceX, int pSourceY, int pTargetX, int pTargetY) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     @Override
     public String printGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
+        String s = "";
+	s += "   a b c d e f g h\n";
+	s += "  +---------------+\n";
+	for (int y=7; y>=0; y--) {
+	    s += (y+1) + " |";
+	    for (int x=0; x<8; x++) {
+		s += piecestr.charAt(board[x][y]);
+		if (x<7) s += " ";
+	    }
+	    s += "| " + (y+1);
+	    s += "\n";
+	}
+	s += "  +---------------+\n";
+	s += "   a b c d e f g h\n";
+	return s;
+    }    
     @Override
      public String toString() {
 	String s = "";
@@ -140,8 +263,11 @@ public class Chess implements IGame{
 	s += "  +---------------+\n";
 	s += "   a b c d e f g h\n";
 	return s;
+    }  
+    @Override
+     public PieceColor GetTurn() {
+        return turnP;
     }
-     
      public static byte makesquare(int p, int c) {
 	return (byte) (p | (c<<3));
     }
@@ -421,6 +547,7 @@ public class Chess implements IGame{
 	if (kingside[turn]) generateKingCastling(castleRank, moveList);
 	if (queenside[turn]) generateQueenCastling(castleRank, moveList);
     }
+     
      private static class PieceDesc {
 	boolean iterate;
 	Pair[] delta;
@@ -446,5 +573,24 @@ public class Chess implements IGame{
         }
 
 	public int type,color,x,y;
-    }     
+    }
+     public static String readCommand(InputStreamReader stdin) throws IOException {
+        final int MAX = 100;
+        int len = 0;
+        char[] cbuf = new char[MAX];
+        //len = stdin.read(cbuf, 0, MAX);
+        for(int i=0; i<cbuf.length; i++){
+            if(logfile && !stdin.ready()) return "quit"; // file is done.
+            
+            cbuf[i] = (char)stdin.read();
+            len++;
+            if(cbuf[i] == '\n')
+                break;
+            if(cbuf[i] == -1){
+                System.out.println("An error occurred reading input");
+                System.exit(1);
+            }
+        }
+        return new String(cbuf, 0, len).trim();  /* trim() removes \n in unix and \r\n in windows */
+    }
 }

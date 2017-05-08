@@ -18,6 +18,7 @@ public class Checkers implements IGame{
     private PieceColor turn = PieceColor.BLACK;
     private IPiece[][] board = new IPiece[8][8];
     
+    @Override
     public PieceColor GetTurn(){
         return turn;
     }

@@ -22,4 +22,5 @@ public interface IGame {
     public abstract void loadGame(String pFileName); // Formato nombre archivo: User1_Usert2.ext
     public abstract String makeMove(PieceColor pTurn, int pSourceX, int pSourceY, int pTargetX, int pTargetY);
     public abstract String printGame();
+    public PieceColor GetTurn();
 }

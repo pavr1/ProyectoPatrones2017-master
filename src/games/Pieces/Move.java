@@ -63,8 +63,8 @@ public class Move {
 	return moveArray[rand.nextInt(moveArray.length)];
     }
     
-    @Override
-    public String toString() {
+    
+    public String printGame() {
 	return new String (new byte[] {
 	    (byte) ('a'+srcx), (byte)('1'+srcy), (byte)('a'+destx), (byte)('1'+desty)});
     }

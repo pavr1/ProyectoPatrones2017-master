@@ -3,7 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/H:/ProyectoFinalPatrones%202017/mindGames/src/games/IGame.java</file>
+            <file>file:/H:/ProjectoMindGames2017/ProyectoPatrones2017-master/src/games/List/Chess.java</file>
+            <file>file:/H:/ProjectoMindGames2017/ProyectoPatrones2017-master/src/games/List/Checkers.java</file>
+            <file>file:/H:/ProjectoMindGames2017/ProyectoPatrones2017-master/src/Factory/GameFactory.java</file>
+            <file>file:/H:/ProjectoMindGames2017/ProyectoPatrones2017-master/src/Main/MindGames.java</file>
         </group>
     </open-files>
 </project-private>
