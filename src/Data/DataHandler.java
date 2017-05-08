@@ -10,27 +10,20 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Properties;
 
 public class DataHandler {
 
-    public DataHandler() {
-
-    }
-
-    public StringBuilder readFile(String pfile) throws Exception {
+    public String readFile(String pfile) throws Exception {
         BufferedReader br;
         String currentLine;
-        StringBuilder fileData = new StringBuilder();
+        String fileData = "";
 
-        try {
-            br = br = new BufferedReader(new FileReader(pfile));
-            while ((currentLine = br.readLine()) != null) {
-                System.out.println(currentLine);
-                fileData.append(currentLine).append("\n");
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File does not exist");
+        br = br = new BufferedReader(new FileReader(pfile));
+        while ((currentLine = br.readLine()) != null) {
+            fileData += currentLine + "\n";
         }
 
         return fileData;
@@ -49,7 +42,7 @@ public class DataHandler {
         writer.close();
     }
 
-    public void registerUserFile(String pusername, String ppassword) throws Exception {
+    public void registerUserFile(String pusername, String ppassword, String pemail) throws Exception {
         Properties prop = new Properties();
         OutputStream output;
 
@@ -58,6 +51,7 @@ public class DataHandler {
             output = new FileOutputStream(file);
             prop.setProperty("Username", pusername);
             prop.setProperty("Password", ppassword);
+            prop.setProperty("Email", pemail);
             prop.store(output, null);
 
         } else {
@@ -67,24 +61,34 @@ public class DataHandler {
 
     public boolean verifyUser(String pusername) throws Exception {
         InputStream input = null;
-        Properties prop = new Properties();
-
+        
         try {
             input = new FileInputStream("src/Data/Database/Users/" + pusername + ".properties");
-            prop.load(input);
             return true;
         } catch (FileNotFoundException ex) {
             return false;
         }
     }
 
-    public boolean verifyFile(String pfile) {
-        boolean fileExists = false;
+    public Iterator<String> loadUsersList() {
+        File folder = new File("src/Data/Database/Users");
+        File[] listOfFiles = folder.listFiles();
+        ArrayList<String> userList = new ArrayList<String>();
 
-        // File f = new File(pfile).isFile();
-        //  if (new File(pfile).isFile()) {
-        //fileExists = true;
-        // }
-        return new File(pfile).exists();
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+            for (File file : listOfFiles) {
+                input = new FileInputStream("src/Data/Database/Users/" + file.getName());
+                prop.load(input);
+                userList.add(prop.getProperty("Username"));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return userList.iterator();
     }
 }

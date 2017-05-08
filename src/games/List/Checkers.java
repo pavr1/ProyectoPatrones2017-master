@@ -10,6 +10,7 @@ import games.Enumerations.PieceColor;
 import games.Interfaces.IGame;
 import games.Interfaces.IPiece;
 import games.Pieces.CheckersPiece;
+import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,51 +18,52 @@ import java.util.logging.Logger;
  *
  * @author gpalomox
  */
-public class Checkers implements IGame{  
+public class Checkers implements IGame {
+
     private PieceColor turn = PieceColor.BLACK;
     private IPiece[][] board = new IPiece[8][8];
-    
-    public PieceColor GetTurn(){
+
+    public PieceColor GetTurn() {
         return turn;
     }
-    
-    public Checkers(){
-        
+
+    public Checkers() {
+
     }
-    
+
     @Override
     public void createGame() {
-        try{
-           board[0][1] = new CheckersPiece(1, PieceColor.BLACK, 1, 0);
-           board[0][3] = new CheckersPiece(2, PieceColor.BLACK, 3, 0);
-           board[0][5] = new CheckersPiece(3, PieceColor.BLACK, 5, 0);
-           board[0][7] = new CheckersPiece(4, PieceColor.BLACK, 7, 0);
-           
-           board[1][0] = new CheckersPiece(5, PieceColor.BLACK, 0, 1);
-           board[1][2] = new CheckersPiece(6, PieceColor.BLACK, 2, 1);
-           board[1][4] = new CheckersPiece(7, PieceColor.BLACK, 4, 1);
-           board[1][6] = new CheckersPiece(8, PieceColor.BLACK, 6, 1);
+        try {
+            board[0][1] = new CheckersPiece(1, PieceColor.BLACK, 1, 0);
+            board[0][3] = new CheckersPiece(2, PieceColor.BLACK, 3, 0);
+            board[0][5] = new CheckersPiece(3, PieceColor.BLACK, 5, 0);
+            board[0][7] = new CheckersPiece(4, PieceColor.BLACK, 7, 0);
 
-           board[2][1] = new CheckersPiece(9, PieceColor.BLACK, 1, 2);
-           board[2][3] = new CheckersPiece(10, PieceColor.BLACK, 3, 2);
-           board[2][5] = new CheckersPiece(11, PieceColor.BLACK, 5, 2);
-           board[2][7] = new CheckersPiece(12, PieceColor.BLACK, 7, 2);
+            board[1][0] = new CheckersPiece(5, PieceColor.BLACK, 0, 1);
+            board[1][2] = new CheckersPiece(6, PieceColor.BLACK, 2, 1);
+            board[1][4] = new CheckersPiece(7, PieceColor.BLACK, 4, 1);
+            board[1][6] = new CheckersPiece(8, PieceColor.BLACK, 6, 1);
 
-           board[5][0] = new CheckersPiece(13, PieceColor.WHITE, 0, 5);
-           board[5][2] = new CheckersPiece(14, PieceColor.WHITE, 2, 5);
-           board[5][4] = new CheckersPiece(15, PieceColor.WHITE, 4, 5);
-           board[5][6] = new CheckersPiece(26, PieceColor.WHITE, 6, 5);
-           
-           board[6][1] = new CheckersPiece(17, PieceColor.WHITE, 1, 6);
-           board[6][3] = new CheckersPiece(18, PieceColor.WHITE, 3, 6);
-           board[6][5] = new CheckersPiece(19, PieceColor.WHITE, 5, 6);
-           board[6][7] = new CheckersPiece(20, PieceColor.WHITE, 7, 6);
-           
-           board[7][0] = new CheckersPiece(21, PieceColor.WHITE, 0, 7);
-           board[7][2] = new CheckersPiece(22, PieceColor.WHITE, 2, 7);
-           board[7][4] = new CheckersPiece(23, PieceColor.WHITE, 4, 7);
-           board[7][6] = new CheckersPiece(24, PieceColor.WHITE, 6, 7);
-        }catch(Exception ex){
+            board[2][1] = new CheckersPiece(9, PieceColor.BLACK, 1, 2);
+            board[2][3] = new CheckersPiece(10, PieceColor.BLACK, 3, 2);
+            board[2][5] = new CheckersPiece(11, PieceColor.BLACK, 5, 2);
+            board[2][7] = new CheckersPiece(12, PieceColor.BLACK, 7, 2);
+
+            board[5][0] = new CheckersPiece(13, PieceColor.WHITE, 0, 5);
+            board[5][2] = new CheckersPiece(14, PieceColor.WHITE, 2, 5);
+            board[5][4] = new CheckersPiece(15, PieceColor.WHITE, 4, 5);
+            board[5][6] = new CheckersPiece(26, PieceColor.WHITE, 6, 5);
+
+            board[6][1] = new CheckersPiece(17, PieceColor.WHITE, 1, 6);
+            board[6][3] = new CheckersPiece(18, PieceColor.WHITE, 3, 6);
+            board[6][5] = new CheckersPiece(19, PieceColor.WHITE, 5, 6);
+            board[6][7] = new CheckersPiece(20, PieceColor.WHITE, 7, 6);
+
+            board[7][0] = new CheckersPiece(21, PieceColor.WHITE, 0, 7);
+            board[7][2] = new CheckersPiece(22, PieceColor.WHITE, 2, 7);
+            board[7][4] = new CheckersPiece(23, PieceColor.WHITE, 4, 7);
+            board[7][6] = new CheckersPiece(24, PieceColor.WHITE, 6, 7);
+        } catch (Exception ex) {
             throw ex;
         }
     }
@@ -76,15 +78,16 @@ public class Checkers implements IGame{
                 for (int j = 0; j < board[i].length; j++) {
                     IPiece piece = board[i][j];
 
-                    if(piece == null)
+                    if (piece == null) {
                         continue;
+                    }
 
                     data += piece.GetID() + "°" + piece.GetColor().toString() + "°" + piece.GetX() + "°" + piece.GetY() + "|";
                 }
             }
 
             DataHandler dataHandler = new DataHandler();
-        
+
             dataHandler.writeFile(filePath, data);
         } catch (Exception ex) {
             Logger.getLogger(Checkers.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,92 +96,92 @@ public class Checkers implements IGame{
 
     @Override
     public void loadGame(String pFileName) {
-        try{
+        try {
             DataHandler dataHandler = new DataHandler();
-           
-            String data = dataHandler.readFile("/src/Data/Database/Checkers/" + pFileName);
-            
+
+            String data = dataHandler.readFile("src/Data/Database/Checkers/" + pFileName);
+
             String[] piecesData = data.split("|");
-            
+
             board = new IPiece[8][8];
-            
+
             for (int i = 0; i < piecesData.length; i++) {
                 String[] pieceInfo = piecesData[i].split("°");
-                
+
                 PieceColor color = PieceColor.valueOf(pieceInfo[1]);
                 int x = Integer.parseInt(pieceInfo[2]);
                 int y = Integer.parseInt(pieceInfo[3]);
-                
-                board[y][x] = new CheckersPiece(Integer.parseInt(pieceInfo[0]), color, x, y);   
+
+                board[y][x] = new CheckersPiece(Integer.parseInt(pieceInfo[0]), color, x, y);
             }
-        }catch(Exception ex){
-            throw ex;
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
     public String makeMove(PieceColor pTurn, int pSourceX, int pSourceY, int pTargetX, int pTargetY) {
-        try{
+        try {
             IPiece piece = board[pSourceY][pSourceX];
-            
-            if(piece == null){                
+
+            if (piece == null) {
                 return "Advertencia: Pieza no encontrada!";
             }
-            
-            if(piece.GetColor() != pTurn){
+
+            if (piece.GetColor() != pTurn) {
                 return "Advertencia: Turno Incorrecto!";
             }
-            
-            if(board[pTargetY][pTargetX] != null){
+
+            if (board[pTargetY][pTargetX] != null) {
                 return "Advertencia: Posición Ocupada!";
             }
-                        
+
             Boolean isValidMovement = piece.isValid(pTargetX, pTargetY);
-            
-            if(!isValidMovement){
+
+            if (!isValidMovement) {
                 return "Advertencia: Movimiento no permitido!";
             }
-            
+
             String message = "";
-            
-            if(((pSourceX - pTargetX) == 2) || ((pSourceY - pTargetY) == 2)){
+
+            if (((pSourceX - pTargetX) == 2) || ((pSourceY - pTargetY) == 2)) {
                 int x = -1;
                 int y = -1;
-                
-                if(pSourceX < pTargetX){
+
+                if (pSourceX < pTargetX) {
                     x = 1;
-                }else{
+                } else {
                     x = -1;
                 }
-                
-                if(pSourceY < pTargetY){
+
+                if (pSourceY < pTargetY) {
                     y = 1;
-                }else{
+                } else {
                     y = -1;
                 }
-                
-                if(board[pSourceY + y][pSourceX + x] == null){
+
+                if (board[pSourceY + y][pSourceX + x] == null) {
                     return "Advertencia: No se puede hacer movimientos de 2 piezas sin comer una pieza enemiga!";
                 }
-                
+
                 board[pSourceY + y][pSourceX + x] = null;
-                
+
                 message = "Felicidades, ha comido una pieza enemiga!";
             }
-            
+
             piece.UpdateCoordinates(pTargetX, pTargetY);
-            
+
             board[pSourceY][pSourceX] = null;
             board[pTargetY][pTargetX] = piece;
-            
-            if(pTurn == PieceColor.BLACK){
+
+            if (pTurn == PieceColor.BLACK) {
                 turn = PieceColor.WHITE;
-            }else{
+            } else {
                 turn = PieceColor.BLACK;
             }
-            
+
             return message;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             throw ex;
         }
     }
@@ -189,31 +192,29 @@ public class Checkers implements IGame{
         output += "\n";
         output += "-------------------------------------------------------------------------------------------------------------------------------------------------";
         output += "\n";
-        
-        for (int row=0; row < board.length; row++)
-        {
-            output += "|\t"+ row + "\t|"; 
-            
-            for (int col=0; col < board[row].length; col++)
-            {
+
+        for (int row = 0; row < board.length; row++) {
+            output += "|\t" + row + "\t|";
+
+            for (int col = 0; col < board[row].length; col++) {
                 IPiece piece = board[row][col];
-                
-                if(piece == null){
+
+                if (piece == null) {
                     output += "|\t\t|";
-                }else{
-                    if(piece.GetColor() == PieceColor.WHITE){
+                } else {
+                    if (piece.GetColor() == PieceColor.WHITE) {
                         output += "|\t○\t|";
-                    }else{
+                    } else {
                         output += "|\t●\t|";
                     }
                 }
-                
+
             }
             output += "\n";
             output += "-------------------------------------------------------------------------------------------------------------------------------------------------";
             output += "\n";
         }
-        
+
         return output;
     }
 
