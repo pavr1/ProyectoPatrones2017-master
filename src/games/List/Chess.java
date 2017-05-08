@@ -122,10 +122,6 @@ public class Chess implements IGame{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void addPice() {
-        
-    }
     
     @Override
      public String toString() {
