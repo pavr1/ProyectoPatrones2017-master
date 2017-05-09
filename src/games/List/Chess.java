@@ -5,6 +5,7 @@
  */
 package games.List;
 
+import Data.DataHandler;
 import games.Enumerations.PieceColor;
 import games.Interfaces.IGame;
 import games.Interfaces.IPiece;
@@ -26,10 +27,12 @@ public class Chess implements IGame{
     public byte[][] board = new byte[8][8];
     IGame game = null;
     public int previousDoublePush;
-    public int turn;
+    public int turn, cH;
     private PieceColor turnP = PieceColor.WHITE;
     public boolean[] kingside = new boolean[2], queenside = new boolean[2];
     public boolean[] hascastled = new boolean[2];
+    private String [] chessHistory1 = null;
+    String chessHistory="";
     public static String piecestr = "nbrqkp-XNBRQKPX";
     public static PieceDesc[] pdesc = new PieceDesc[5];
     public static IPiece pawnA;
@@ -132,6 +135,7 @@ public class Chess implements IGame{
                                  String command="", prompt;
                                  Move m = new Move();               
                                  System.out.println("Chess Game Started: ");
+                                 cH =0;
                                  while(true) {                                   
                                    game = new Chess();
                                    temp = (Chess)game;
@@ -183,7 +187,8 @@ public class Chess implements IGame{
                                                    }
                                                    System.out.println("Computer Moves: " + m);
                                                    break;
-                                               case "quit":                                                  
+                                               case "quit":
+                                                   saveGame(prompt,prompt);
                                                    return;
                                                default:
                                                    m = null;
@@ -192,16 +197,22 @@ public class Chess implements IGame{
                                                      m = moveArray1;
                                                      break;
                                                      }
-                                                   }if (m != null) {
+                                                   }if (m != null) {                                                       
                                                        break OUTER;
                                                    }
                                                    System.out.println("\""+command+"\" is not a legal move");
                                                    break;
                                            }
                                        }                                 
-                                 b.makeMove(m);
+                                 b.makeMove(m);                                 
+                                 cH++;
                                  System.out.println(prompt + " moved made "+m);
-                               }                        
+                                 
+                                 chessHistory += "" + cH +". "+prompt+" "+m;
+                                 
+                               }
+                                 chessHistory1 = new String[cH];
+                                 
                         while(true) {
                             System.out.print("Play again? (y/n):");
                                        try {
@@ -210,7 +221,7 @@ public class Chess implements IGame{
                                            Logger.getLogger(Chess.class.getName()).log(Level.SEVERE, null, ex);
                                        }                            
                             if (command.equals("n")){
-                                System.exit(1);
+                                return;
                             }if (command.equals("y")) {
                                 break;
                             }
@@ -219,7 +230,20 @@ public class Chess implements IGame{
     }
     @Override
     public void saveGame(String user1, String user2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String filePath = "E:\\ProjectoMindGames2017\\ProyectoPatrones2017-master\\src\\Data\\Database\\Chess\\" + user1 + "_" + user2 + ".pgn";
+            String data = "";
+
+            //for (int i = 0; i < chessHistory.length; i++) {
+                data += chessHistory;                
+            //}
+
+            DataHandler dataHandler = new DataHandler();
+
+            dataHandler.writeFile(filePath, data);
+        } catch (Exception ex) {
+            Logger.getLogger(Checkers.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     @Override
     public void loadGame(String pFileName) {
