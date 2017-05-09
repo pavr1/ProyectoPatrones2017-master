@@ -119,6 +119,7 @@ public class GameFactory {
                             case "1":                                 
                                 game.createGame();                                
                             case "2":
+                                game.loadGame("Black_Black.pgn");
                             case "3":                              
                                 break;                                 
                             default:System.out.println("Not a valid option\n");
