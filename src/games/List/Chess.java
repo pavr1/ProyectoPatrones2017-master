@@ -309,7 +309,7 @@ public class Chess implements IGame{
                                        while (true) {
                                            System.out.print(prompt + " move (or \"go\" or \"quit\")> \n");
                                        try {                                           
-                                           if( piecesData.length > ii ){                                            
+                                           if( piecesData.length >= ii ){                                            
                                                if("White".equals(piecesData[ii+1])){
                                                    command = piecesData[ii+2];
                                                    ii+=2;
@@ -319,7 +319,8 @@ public class Chess implements IGame{
                                                }
                                                ii++;
                                            }else{
-                                               command = readCommand(stdin);                                               
+                                               command = readCommand(stdin);
+                                               break OUTER;
                                            }
                                        } catch (IOException ex) {
                                            Logger.getLogger(Chess.class.getName()).log(Level.SEVERE, null, ex);
