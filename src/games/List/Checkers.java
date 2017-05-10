@@ -71,7 +71,7 @@ public class Checkers implements IGame {
     @Override
     public void saveGame(String user1, String user2) {
         try {
-            String filePath = "/src/Data/Database/Checkers/" + user1 + "_" + user2 + ".pdn";
+            String filePath = "src\\Data\\Database\\Checkers\\" + user1 + "_" + user2 + ".pdn";
             String data = "";
 
             for (int i = 0; i < board.length; i++) {
