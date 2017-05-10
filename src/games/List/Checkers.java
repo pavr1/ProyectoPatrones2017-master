@@ -99,7 +99,7 @@ public class Checkers implements IGame {
         try {
             DataHandler dataHandler = new DataHandler();
 
-            String data = dataHandler.readFile("src/Data/Database/Checkers/" + pFileName);
+            String data = dataHandler.readFile("src\\Data\\Database\\Checkers\\" + pFileName);
 
             String[] piecesData = data.split("|");
 

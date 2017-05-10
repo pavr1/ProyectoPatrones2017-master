@@ -59,7 +59,7 @@ public class Go implements IGame{
     public void saveGame(String user1, String user2) {
         
          try {
-            String filePath = "src\\Data\\Database\\Checkers\\" + user1 + "_" + user2 + ".sgf";
+            String filePath = "src\\Data\\Database\\Go\\" + user1 + "_" + user2 + ".sgf";
             String data = "";
 
             for (int i = 0; i < board.length; i++) {
@@ -87,7 +87,7 @@ public class Go implements IGame{
          try {
             DataHandler dataHandler = new DataHandler();
 
-            String data = dataHandler.readFile("src/Data/Database/Go/" + pFileName);
+            String data = dataHandler.readFile("src\\Data\\Database\\Go\\" + pFileName);
 
             String[] piecesData = data.split("|");
 
