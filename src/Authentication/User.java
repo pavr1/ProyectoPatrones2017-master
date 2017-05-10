@@ -13,6 +13,18 @@ public class User {
         }
 
         User gPlayer = new User();
+        
+        String username = pusername;
+        String correo = pemail;
+        String password = ppassword;
+       
+       
+        dt.registerUserFile(username, correo, password);
+       
+        System.out.println("**************************************");
+        System.out.println("*El usuario se registro exitosamente*");
+        System.out.println("**************************************");
+        System.out.println();
 
         return gPlayer;
     }
@@ -26,3 +38,4 @@ public class User {
     }
 
 }
+
