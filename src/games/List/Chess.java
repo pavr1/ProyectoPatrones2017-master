@@ -250,7 +250,7 @@ public class Chess implements IGame{
     public void loadGame(String pFileName) {
         try {
             DataHandler dataHandler = new DataHandler();
-            String data = dataHandler.readFile("D:\\ProjectoMindGames2017\\ProyectoPatrones2017-master\\src\\Data\\Database\\Chess\\" + pFileName);
+            String data = dataHandler.readFile("src\\Data\\Database\\Chess\\" + pFileName);
             String[] piecesData = data.split(" ");
             String pMove= "";
             int ii = 0;
