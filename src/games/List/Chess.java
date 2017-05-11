@@ -6,6 +6,7 @@
 package games.List;
 
 import Data.DataHandler;
+import Main.MindGames;
 import games.Enumerations.PieceColor;
 import games.Interfaces.IGame;
 import games.Interfaces.IPiece;
@@ -69,6 +70,7 @@ public class Chess implements IGame{
 	    { 1, 0 , 0, 1 , -1,0 , 0,-1 , 1, 1 , 1,-1 , -1, -1 , -1,1 });
     }
     public Chess() {
+        args=MindGames.pArgs;
 	turn = WHITE;
 	for (int x=0; x<8; x++) {
 	    for (int y=0; y<8; y++) {
@@ -187,7 +189,7 @@ public class Chess implements IGame{
                                                    System.out.println("Computer Moves: " + m);
                                                    break;
                                                case "quit":
-                                                   saveGame(prompt,prompt);
+                                                   saveGame("juan", "pedro");
                                                    return;
                                                default:
                                                    m = null;
@@ -229,7 +231,8 @@ public class Chess implements IGame{
     @Override
     public void saveGame(String user1, String user2) {
         try {
-            String filePath = "E:\\ProjectoMindGames2017\\ProyectoPatrones2017-master\\src\\Data\\Database\\Chess\\" + user1 + "_" + user2 + ".pgn";
+            String filePath = "src\\Data\\Database\\Go\\" + user1 + "_" + user2 + ".pgn";
+            //System.getProperty("user.dir")+
             String data = "";
 
             //for (int i = 0; i < chessHistory.length; i++) {
