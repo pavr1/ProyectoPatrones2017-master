@@ -33,9 +33,7 @@ public class MindGames {
         pArgs = args;
         mostrarMenuPrincipal();
         
-    }    
-    
-    
+    }     
      public static void createNewCheckersGame(IGame pgame){
        
       try {
@@ -124,8 +122,7 @@ public class MindGames {
 
         }
     
-    }
-     
+    }     
     public static void createNewChessGame(IGame pgame){
        
        try{
@@ -141,6 +138,7 @@ public class MindGames {
                  switch(option){
                      case 1:
                          System.out.println("The game has been created" );
+                         System.out.println(game.printGame());
                          break;
                      case 2:
                          System.out.println("Select Move" );
@@ -148,6 +146,7 @@ public class MindGames {
                          break;
                      case 3:
                          System.out.println(game.printGame());
+                         game.loadGame("juan_pedro.pgn");
                          break;
                       
                       case 4:

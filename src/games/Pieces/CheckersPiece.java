@@ -18,8 +18,8 @@ public class CheckersPiece implements IPiece{
     private int x = -1;
     private int y = -1;
     
-    private int[][] whiteAvailableMoves = new int[2][2];
-    private int[][] blackAvailableMoves = new int[2][2];
+    private int[][] whiteAvailableMoves = new int[4][4];
+    private int[][] blackAvailableMoves = new int[4][4];
     
     public PieceColor GetColor(){
         return color;
@@ -35,11 +35,19 @@ public class CheckersPiece implements IPiece{
         whiteAvailableMoves[0][1] = -1;
         whiteAvailableMoves[1][0] = -1;
         whiteAvailableMoves[1][1] = -1;
+        whiteAvailableMoves[2][0] = 2;
+        whiteAvailableMoves[2][1] = -2;
+        whiteAvailableMoves[3][0] = -2;
+        whiteAvailableMoves[3][1] = -2;
         
         blackAvailableMoves[0][0] = 1;
         blackAvailableMoves[0][1] = 1;
         blackAvailableMoves[1][0] = -1;
         blackAvailableMoves[1][1] = 1;
+        blackAvailableMoves[2][0] = 2;
+        blackAvailableMoves[2][1] = 2;
+        blackAvailableMoves[3][0] = -2;
+        blackAvailableMoves[3][1] = 2;
     }
     
     /*
@@ -47,7 +55,6 @@ public class CheckersPiece implements IPiece{
     public void move(int pLocation, int pDestination) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     @Override
     public boolean isAvailable(int x, int y) {
         return false;
@@ -72,6 +79,27 @@ public class CheckersPiece implements IPiece{
         }
         
         return false;
+    }
+
+    @Override
+    public void UpdateCoordinates(int pX, int pY) {
+        x = pX;
+        y = pY;
+    }
+
+    @Override
+    public int GetID() {
+        return id;
+    }
+
+    @Override
+    public int GetX() {
+        return x;
+    }
+
+    @Override
+    public int GetY() {
+        return y;
     }
     
 }

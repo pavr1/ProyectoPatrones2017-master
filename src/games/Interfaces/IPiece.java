@@ -14,4 +14,8 @@ import games.Enumerations.PieceColor;
 public interface IPiece {
     public abstract boolean isValid(int x, int y);
     public PieceColor GetColor();
+    public void UpdateCoordinates(int x, int y);
+    public int GetID();
+    public int GetX();
+    public int GetY();
 }

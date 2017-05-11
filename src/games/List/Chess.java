@@ -34,7 +34,8 @@ public class Chess implements IGame{
     public boolean[] hascastled = new boolean[2];
     private String [] chessHistory1 = null;
     String chessHistory=" ";
-    public static String piecestr = "nbrqkp-XNBRQKPX";
+    //public static String piecestr = "nbrqkp-XNBRQKPX";
+    public static String piecestr = "♞♝♜♛♚♟ X♘♗♖♕♔♙X";
     public static PieceDesc[] pdesc = new PieceDesc[5];
     public static IPiece pawnA;
     private static boolean logfile = false;
@@ -388,19 +389,24 @@ public class Chess implements IGame{
     @Override
     public String printGame() {
         String status = "";
-	status += "   a b c d e f g h\n";
-	status += "  +---------------+\n";
+	status += "    a b c  d  e f  g h\n";
+	status += "  +--------------------+\n";
 	for (int y=7; y>=0; y--) {
 	    status += (y+1) + " |";
 	    for (int x=0; x<8; x++) {
 		status += piecestr.charAt(board[x][y]);
-		if (x<7) status += " ";
+		if (x<5 || piecestr.charAt(board[x][y])!=' '){
+                    status += " ";
+                }
+                if(piecestr.charAt(board[x][y])==' '){
+                    status +=piecestr.charAt(board[x][y]);
+                }
 	    }
 	    status += "| " + (y+1);
 	    status += "\n";
 	}
-	status += "  +---------------+\n";
-	status += "   a b c d e f g h\n";
+	status += "  +--------------------+\n";
+	status += "    a b c  d  e f  g h\n";
 	return status;
     }
     public String toString() {        
