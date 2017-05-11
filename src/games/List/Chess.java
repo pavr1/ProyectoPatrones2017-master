@@ -33,7 +33,7 @@ public class Chess implements IGame{
     public boolean[] kingside = new boolean[2], queenside = new boolean[2];
     public boolean[] hascastled = new boolean[2];
     private String [] chessHistory1 = null;
-    String chessHistory="";
+    String chessHistory=" ";
     public static String piecestr = "nbrqkp-XNBRQKPX";
     public static PieceDesc[] pdesc = new PieceDesc[5];
     public static IPiece pawnA;
@@ -231,14 +231,13 @@ public class Chess implements IGame{
     @Override
     public void saveGame(String user1, String user2) {
         try {
-            String filePath = "src\\Data\\Database\\Go\\" + user1 + "_" + user2 + ".pgn";
-            //System.getProperty("user.dir")+
+            String filePath = System.getProperty("user.dir").concat("\\src\\Data\\Database\\Chess\\" + user1 + "_" + user2 + ".pgn");
+            //+
             String data = "";
 
             //for (int i = 0; i < chessHistory.length; i++) {
-                data += chessHistory;                
-            //}
-
+                data += chessHistory;
+            //}            
             DataHandler dataHandler = new DataHandler();
 
             dataHandler.writeFile(filePath, data);
@@ -250,7 +249,7 @@ public class Chess implements IGame{
     public void loadGame(String pFileName) {
         try {
             DataHandler dataHandler = new DataHandler();
-            String data = dataHandler.readFile("src\\Data\\Database\\Chess\\" + pFileName);
+            String data = dataHandler.readFile(System.getProperty("user.dir").concat("\\src\\Data\\Database\\Chess\\" + pFileName));
             String[] piecesData = data.split(" ");
             String pMove= "";
             int ii = 0;

@@ -167,7 +167,7 @@ public class MindGames {
     
     }
     
-     public static void createNewGoGame(IGame pgame){
+    public static void createNewGoGame(IGame pgame){
        
         try{
             IGame game = pgame;
@@ -269,9 +269,8 @@ public class MindGames {
            
        }
     
-    }
-    
-     public static void mostrarMenuPrincipal() throws IOException, Exception{
+    }    
+    public static void mostrarMenuPrincipal() throws IOException, Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         
         System.out.println("********Main Menu********");
@@ -282,8 +281,7 @@ public class MindGames {
         System.out.println("3. Quit");
         int opcion = Integer.parseInt(br.readLine());
         seleccionarOpcion(opcion);
-    }
-     
+    }     
     public static int mostrarMenuOpcionesJuego() throws IOException{
         System.out.println("Select an option:");
         System.out.println("1. Create Game");
@@ -294,9 +292,7 @@ public class MindGames {
         int option = Integer.parseInt(in.readLine());
         return option;
                  
-    }
-    
-    
+    }    
     public static boolean seleccionarOpcion(int popcion) throws IOException, Exception{
         switch(popcion){
             case 1:
@@ -312,8 +308,7 @@ public class MindGames {
                 break;   
         }
         return true;
-    }
-    
+    }    
     public static void mostrarMenuJuego() throws IOException, Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Select a game:");
@@ -323,8 +318,7 @@ public class MindGames {
         System.out.println("4. Main Menu");
         int opcion = Integer.parseInt(br.readLine());
         seleccionarJuego(opcion);
-    }
-    
+    }    
     public static void seleccionarJuego(int popcion) throws Exception{
         IGame newGame;
         GameFactory gf = new GameFactory();
@@ -349,8 +343,7 @@ public class MindGames {
                 System.out.println("Opcion invalida");
                 break;   
         }
-    }
-    
+    }    
     public static void createUser() throws IOException, Exception{
        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
        System.out.println("-----Crear usuario-----");
@@ -363,9 +356,8 @@ public class MindGames {
        Gestor gest = new Gestor();
        gest.createUser(user, mail, password);
        mostrarMenuPrincipal();
-    }
-    
-     public static boolean VerifyColor(IGame pgame, String ppieceCoordinates) throws IOException, Exception{
+    }    
+    public static boolean VerifyColor(IGame pgame, String ppieceCoordinates) throws IOException, Exception{
          System.out.println("estoy en everifycolor");
          System.out.println("Turno -> Color " + pgame.GetTurn().toString());
         if (pgame.GetTurn() == PieceColor.BLACK) {
@@ -380,9 +372,8 @@ public class MindGames {
             return false;
         }
         return true;
-    }
-     
-     public static String verifyTurn(IGame pgame, String[] ppieceCoordinatesArr, String[] ptargetCoordinatesArr) throws IOException, Exception{
+    }     
+    public static String verifyTurn(IGame pgame, String[] ppieceCoordinatesArr, String[] ptargetCoordinatesArr) throws IOException, Exception{
         int pieceY;
         int pieceX;
         int targetY;
@@ -402,8 +393,7 @@ public class MindGames {
         
         String message = pgame.makeMove((PieceColor) pgame.GetTurn(), pieceX, pieceY, targetX, targetY);
         return message;
-    }
-    
+    }    
     public static void verifyMovement(IGame pgame, String pmessage) throws IOException, Exception{
         if("".equals(pmessage))
         {
@@ -413,8 +403,7 @@ public class MindGames {
         }else{
             System.out.println("Este movimiento no es permitido! Detalle: " + pmessage);
         }
-    }
-     
+    }     
     public static String[] InsertTargetCoordinates() throws IOException, Exception{
         System.out.print("Please provide the target coordinates (x,y): ");
         String targetCoordinates = (String)in.readLine();
